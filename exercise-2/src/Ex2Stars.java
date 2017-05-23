@@ -12,7 +12,7 @@ public class Ex2Stars {
 	static int width = 1200;
 	static int height = 800;
 	
-	float[] cameraPos = new float[]{0, 0, 1000};
+	float[] cameraPos = new float[]{0, 0, 1500};
 	
 	
 	public static void main(String[] args) 
@@ -40,10 +40,10 @@ public class Ex2Stars {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		GL11.glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
+		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GLU.gluPerspective(45.f, (float)width/height, 0.1f, 6000.f);
+		GLU.gluPerspective(45.f, (float)width/height, 1.1f, 6000.f);
 		
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
@@ -64,7 +64,9 @@ public class Ex2Stars {
 		}
 	}
 	
-	float winkel = 0;
+	float motherRotationAngle = 0;
+	float ownRotationAngle = 0;
+	float motherDistance = 400;
 	
 	public void draw() 
 	{
@@ -80,16 +82,20 @@ public class Ex2Stars {
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		}
 		
+		//increase rotation value
+		motherRotationAngle += 1.0f;
+		ownRotationAngle += 1.0f;
+		
 		//draw sun
 		GL11.glColor3f(0.8f, 0.8f, 0.1f);
-		winkel += 1.0f;
-		GL11.glRotatef(winkel, 0, 1, 0);
-		GLDrawHelper.drawSphere(100, 10, 10);
+		GL11.glRotatef(motherRotationAngle, 0, 1, 0);
+		GLDrawHelper.drawSphere(200, 10, 10);
 		
 		//draw earth
-		GL11.glTranslatef(400, 0, 0);
+		GL11.glTranslatef(motherDistance, 0, 0);
 		GL11.glColor3f(0.2f, 0.2f, 0.8f);
-		GLDrawHelper.drawSphere(20, 10, 10);
+		GL11.glRotatef(ownRotationAngle, 0, 1, 0);
+		GLDrawHelper.drawSphere(100, 10, 10);
 		
 		Display.update();
 		Display.sync(25);
