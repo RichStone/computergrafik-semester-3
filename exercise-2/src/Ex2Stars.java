@@ -15,6 +15,10 @@ public class Ex2Stars {
 	
 	float[] cameraPos = new float[]{0, 0, 1500};
 	
+	static long initTime = System.currentTimeMillis();
+	
+	Planet sun;
+	
 	
 	public static void main(String[] args) 
 	{
@@ -47,6 +51,8 @@ public class Ex2Stars {
 		GLU.gluPerspective(45.f, (float)width/height, 1.1f, 6000.f);
 		
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		
+		sun = new Planet(200, 0, 0, 5);
 	}
 	
 	boolean keyPressed = false;
@@ -65,29 +71,8 @@ public class Ex2Stars {
 		}
 	}
 	
-	float motherRotationAngle = 0;
-	float ownRotationAngle = 0;
-	float motherDistance = 400;
-	float sunAngle = 0;
-	long startTime = System.currentTimeMillis();
-	
-	public float getSimDay() {
-		long timeElapsed = System.currentTimeMillis() - startTime;
-		float day = (float)(timeElapsed / 1000.0) * 10;
-		System.out.println(day);
-		return day;
-	}
-	
 	public void draw() 
-	{
-		float day = getSimDay();
-		
-		motherRotationAngle = day / 365 * 360;
-		ownRotationAngle = day * 360;
-		
-		System.out.println(day);
-		System.out.println(ownRotationAngle);
-		
+	{	
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glLoadIdentity();
@@ -100,17 +85,15 @@ public class Ex2Stars {
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		}
 		
-		//draw sun
-		GL11.glColor3f(0.8f, 0.8f, 0.1f);
-		GL11.glRotatef(motherRotationAngle, 0, 1, 0);
-		GLDrawHelper.drawSphere(200, 10, 10);
+		sun.draw();
 		
-		//draw earth
-		GL11.glRotatef(motherRotationAngle, 0.f, 1.f, 0.f);
-		GL11.glTranslatef(motherDistance, 0, 0);
-		GL11.glColor3f(0.2f, 0.2f, 0.8f);
-		GL11.glRotatef(ownRotationAngle, 0, 1, 0);
-		GLDrawHelper.drawSphere(20, 10, 10);
+//		//draw sun
+//		GL11.glColor3f(0.8f, 0.8f, 0.1f);
+//		GLDrawHelper.drawSphere(200, 10, 10);
+		
+//		//draw earth
+//		GL11.glColor3f(0.2f, 0.2f, 0.8f);
+//		GLDrawHelper.drawSphere(50, 10, 10);
 		
 		Display.update();
 		Display.sync(60);
