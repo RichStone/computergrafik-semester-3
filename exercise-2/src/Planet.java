@@ -42,16 +42,28 @@ public class Planet {
 
 	
 	public void draw() {
-		float motherRotationAngle = getMotherRotationAngle();
+		float motherRotationAngle;
+		if(yearLength == 0)
+			motherRotationAngle = 0;
+		else 
+			motherRotationAngle = getMotherRotationAngle();
+		
 		float ownRotationAngle = getOwnRotationAngle();
 		
+		System.out.println("mr: " + motherRotationAngle);
+		System.out.println(ownRotationAngle);
 		GL11.glPushMatrix();
 		
 		GL11.glColor3f(0.8f, 0.8f, 0.1f);
 		
-//		GL11.glRotatef(motherRotationAngle, 0, 1, 0);
-		GL11.glTranslatef(300, 0, 0);
-//		GL11.glRotatef(ownRotationAngle, 0, 1, 0);
+		if(motherRotationAngle > 0)
+			GL11.glRotatef(motherRotationAngle, 0, 1, 0);
+		
+		GL11.glTranslatef(motherDistance, 0, 0);
+		
+		if(ownRotationAngle > 0)
+			GL11.glRotatef(ownRotationAngle, 0, 1, 0);
+		
 		GLDrawHelper.drawSphere(size, 10, 10);
 		
 		if(!childPlanets.isEmpty()) {
@@ -83,7 +95,6 @@ public class Planet {
 	public float getSimDay() {
 		long timeElapsed = System.currentTimeMillis() - startTime;
 		float day = (float)(timeElapsed / 1000.0) * 10;
-		System.out.println(day);
 		return day;
 	}
 }

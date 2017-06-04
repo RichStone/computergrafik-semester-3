@@ -52,7 +52,7 @@ public class Ex2Stars {
 		
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		
-		sun = new Planet(200, 0, 0, 5);
+		sun = new Planet(200, 0, 0, 0);
 	}
 	
 	boolean keyPressed = false;
@@ -86,14 +86,6 @@ public class Ex2Stars {
 		}
 		
 		sun.draw();
-		
-//		//draw sun
-//		GL11.glColor3f(0.8f, 0.8f, 0.1f);
-//		GLDrawHelper.drawSphere(200, 10, 10);
-		
-//		//draw earth
-//		GL11.glColor3f(0.2f, 0.2f, 0.8f);
-//		GLDrawHelper.drawSphere(50, 10, 10);
 		
 		Display.update();
 		Display.sync(60);
