@@ -9,6 +9,7 @@ public class Planet {
 	int dayLength; //factor based on earth days, e.g. Earth = 1
 	int yearLength; //in days
 	float motherDistance;
+	float [] color = new float[3];
 	ArrayList<Planet> childPlanets;
 	
 	long startTime = Ex2Stars.initTime;
@@ -17,13 +18,17 @@ public class Planet {
 			int size, 
 			int dayLength, 
 			int yearLength, 
-			float motherDistance, 
+			float motherDistance,
+			float [] color,
 			ArrayList<Planet> childPlanets) 
 	{
 		this.size = size;
 		this.dayLength = dayLength;
 		this.yearLength = yearLength;
 		this.motherDistance = motherDistance;
+		this.color[0] = color[0];
+		this.color[1] = color[1];
+		this.color[2] = color[2];
 		this.childPlanets = childPlanets;
 	}
 	
@@ -37,6 +42,9 @@ public class Planet {
 		this.dayLength = dayLength;
 		this.yearLength = yearLength;
 		this.motherDistance = motherDistance;
+		this.color[0] = 0.8f;
+		this.color[1] = 0.8f;
+		this.color[2] = 0.1f;
 		this.childPlanets = new ArrayList<Planet>();
 	}
 
@@ -54,7 +62,7 @@ public class Planet {
 		System.out.println(ownRotationAngle);
 		GL11.glPushMatrix();
 		
-		GL11.glColor3f(0.8f, 0.8f, 0.1f);
+		GL11.glColor3f(color[0], color[1], color[2]);
 		
 		if(motherRotationAngle > 0)
 			GL11.glRotatef(motherRotationAngle, 0, 1, 0);

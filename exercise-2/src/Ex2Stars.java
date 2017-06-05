@@ -1,5 +1,6 @@
+import java.util.ArrayList;
+
 import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -13,11 +14,11 @@ public class Ex2Stars {
 	static int width = 1200;
 	static int height = 800;
 	
-	float[] cameraPos = new float[]{0, 0, 1500};
+	float[] cameraPos = new float[]{0, 1500, 1500};
 	
 	static long initTime = System.currentTimeMillis();
 	
-	Planet sun;
+	Planet sun, earth, moon;
 	
 	
 	public static void main(String[] args) 
@@ -48,13 +49,27 @@ public class Ex2Stars {
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GLU.gluPerspective(45.f, (float)width/height, 1.1f, 6000.f);
+		GLU.gluPerspective(75.f, (float)width/height, 2.1f, 6000.f);
 		
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		
-		sun = new Planet(200, 0, 0, 0);
+		addPlanets();
 	}
 	
+	private void addPlanets() {
+		moon = new Planet(10, 24, 300, 100);
+		ArrayList<Planet> earthChild = new ArrayList<Planet>();
+		earthChild.add(moon);
+		
+		float [] earthColor = {0.2f, 0.2f, 0.8f};
+		earth = new Planet(50, 24, 360, 400, earthColor, earthChild);
+		ArrayList<Planet> sunChildren = new ArrayList<Planet>();
+		sunChildren.add(earth);
+		
+		float [] sunColor = {0.8f, 0.8f, 0.1f};
+		sun = new Planet(200, 0, 0, 0, sunColor, sunChildren);
+	}
+
 	boolean keyPressed = false;
 	boolean doWireframe = false;
 	
